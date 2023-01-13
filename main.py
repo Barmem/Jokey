@@ -20,6 +20,16 @@ def help(update, context):
     """Send a message when the command /help is issued."""
     update.message.reply_text('Help!')
 
+def sql(update, context, host, user, password, database,  param = ""):
+    records = get_records(
+        host,
+        user,
+        password,
+        database,
+        # param
+        f"SELECT * FROM People WHERE `Telegram ID`= {update.effective_user.id}",
+        )
+    update.message.reply_text(f"{records}")
 
 
 def error(update, context):
@@ -28,8 +38,12 @@ def error(update, context):
 
 def main():
     # Parse command line arguments
-    parser = argparse.ArgumentParser(description='A simple Telegram bot')
-    parser.add_argument('token', help='The Telegram bot token')
+    parser = argparse.ArgumentParser(description='Телеграм бот для обработки запросов проезда на территорию')
+    parser.add_argument('token', help='Токен бота')
+    parser.add_argument('--host', help='Хост БД')
+    parser.add_argument('--user', help='Имя пользователя БД')
+    parser.add_argument('--password', help='пароль БД')
+    parser.add_argument('--database', help='Имя БД')
     args = parser.parse_args()
 
     # Create the Updater and pass it your bot's token.
@@ -48,6 +62,7 @@ def main():
     # on different commands - answer in Telegram
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help))
+    dp.add_handler(CommandHandler("sql", lambda update, context: sql(update, context, args.host, args.user, args.password, args.database) ))
 
     # log all errors
     dp.add_error_handler(error)
