@@ -1,7 +1,6 @@
 from telegram import ReplyKeyboardMarkup, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import Updater, CommandHandler, ConversationHandler, MessageHandler, Filters
-import main
-from sqlaccess import get_records, insert_records
+import sqlaccess
 import re
 import time
 
@@ -25,7 +24,7 @@ def passRequestConvo():
 
 def isreg(update, context):
     """Start the conversation."""
-    records = get_records(
+    records = sqlaccess.get_records(
         f"SELECT * FROM People WHERE `Telegram ID`= {update.effective_user.id}",
         )
     # print(records[0][9])
@@ -51,11 +50,7 @@ def car_input(update, context):
     if myregex.match(update.message.text):
         current_timestamp = round(time.time())
 
-        insert_records(
-            main.args.host,
-            main.args.user,
-            main.args.password,
-            main.args.database,
+        sqlaccess.insert_records(
             f"INSERT INTO Passes (`Car Number`, `People ID`, `Request Time`, `Expiration Time`, `Access ID`) VALUES ('{update.message.text}', (select `People ID` from People where `Telegram ID`='{update.effective_user.id}'), FROM_UNIXTIME({current_timestamp}), FROM_UNIXTIME({current_timestamp + (60*60*24)}), 1)",
         )
         update.message.reply_text('Пропуск авто оформлен.')
@@ -81,11 +76,7 @@ def human_input(update, context):
     myregex = re.compile(r"[^А-Яа-яЁё\s]+")    
     result_string = re.sub(myregex, "", update.message.text)
     if(result_string != ''):
-        insert_records(
-                main.args.host,
-                main.args.user,
-                main.args.password,
-                main.args.database,
+        sqlaccess.insert_records(
                 f"INSERT INTO Passes (`Surname`, `People ID`, `Request Time`, `Expiration Time`, `Access ID`) VALUES ('{result_string}', (select `People ID` from People where `Telegram ID`='{update.effective_user.id}'), FROM_UNIXTIME({current_timestamp}), FROM_UNIXTIME({current_timestamp + (60*60*24)}), 2)",
             )
         update.message.reply_text(f"Пропуск на {result_string} оформлен")

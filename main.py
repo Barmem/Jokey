@@ -1,6 +1,6 @@
 import argparse
 import logging
-from sqlaccess import get_records
+import sqlaccess 
 import convo
 from telegram import ReplyKeyboardMarkup, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import Updater, CommandHandler, ConversationHandler, MessageHandler, Filters
@@ -30,7 +30,7 @@ def help(update, context):
     update.message.reply_text('Help!')
 
 def sql(update, context, host, user, password, database,  param = ""):
-    records = get_records(
+    records = sqlaccess.get_records(
         f"SELECT * FROM People WHERE `Telegram ID`= {update.effective_user.id}"
         )
     update.message.reply_text(f"{records}")

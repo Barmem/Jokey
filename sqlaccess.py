@@ -1,12 +1,12 @@
 import mysql.connector
-import main
+from main import args 
 def get_records(statement, port=1881):
   # Connect to the database
   conn = mysql.connector.connect(
-    main.args.host,
-    main.args.user,
-    main.args.password,
-    main.args.database,
+    args.host,
+    args.user,
+    args.password,
+    args.database,
     port=port
   )
 
