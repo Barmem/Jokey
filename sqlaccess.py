@@ -2,11 +2,12 @@ import mysql.connector
 from main import args 
 def get_records(statement, port=1881):
   # Connect to the database
+  print(f"{args.host}, {args.user}, {args.password}, {args.database}")
   conn = mysql.connector.connect(
-    args.host,
-    args.user,
-    args.password,
-    args.database,
+    host=args.host,
+    user=args.user,
+    password=args.password,
+    database=args.database,
     port=port
   )
 
@@ -14,7 +15,7 @@ def get_records(statement, port=1881):
   cursor = conn.cursor()
 
   # Execute the SELECT statement
-  cursor.execute(statement)
+  cursor.execute(statement, "")
   # Fetch the records
   records = cursor.fetchall()
 
@@ -27,10 +28,10 @@ def get_records(statement, port=1881):
 def insert_records(query, port=1881): 
   try: 
     db_con = mysql.connector.connect(
-      args.host,
-      args.user,
-      args.password,
-      args.database,
+      host=args.host,
+      user=args.user,
+      password=args.password,
+      database=args.database,
       port=port
     ) 
     print(query)
@@ -39,7 +40,7 @@ def insert_records(query, port=1881):
     db_con.commit() 
     print("Query executed successfully!") 
   except mysql.connector.Error as e: 
-    print(f"The error '{e}' occurred") 
+    print(f"MySQL error '{e}' occurred") 
 
 
 
