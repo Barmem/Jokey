@@ -1,5 +1,4 @@
 import mysql.connector
-
 def get_records(host, user, password, database, statement, param = "", port=1881):
   # Connect to the database
   conn = mysql.connector.connect(
@@ -9,7 +8,7 @@ def get_records(host, user, password, database, statement, param = "", port=1881
     database=database,
     port=port
   )
-  # conn.set_charset_collation('utf8_general_ci')
+
   # Create a cursor object
   cursor = conn.cursor()
 
@@ -24,9 +23,25 @@ def get_records(host, user, password, database, statement, param = "", port=1881
   # Close the cursor and connection
   cursor.close()
   conn.close()
-  records = [tuple(str(x).encode('utf-8').decode('utf-8') for x in record) for record in records]
   print(records)  
   return records
+
+def insert_records(host, user, password, database, query, port=1881): 
+  try: 
+    db_con = mysql.connector.connect(
+      host=host,
+      user=user,
+      password=password,
+      database=database,
+      port=port
+    ) 
+    print(query)
+    cursor  = db_con.cursor()
+    cursor.execute(query) 
+    db_con.commit() 
+    print("Query executed successfully!") 
+  except mysql.connector.Error as e: 
+    print(f"The error '{e}' occurred") 
 
 
 
