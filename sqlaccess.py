@@ -27,10 +27,10 @@ def get_records(statement, port=1881):
 def insert_records(query, port=1881): 
   try: 
     db_con = mysql.connector.connect(
-      main.args.host,
-      main.args.user,
-      main.args.password,
-      main.args.database,
+      args.host,
+      args.user,
+      args.password,
+      args.database,
       port=port
     ) 
     print(query)
