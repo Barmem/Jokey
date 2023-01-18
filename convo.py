@@ -26,10 +26,6 @@ def passRequestConvo():
 def isreg(update, context):
     """Start the conversation."""
     records = get_records(
-        main.args.host,
-        main.args.user,
-        main.args.password,
-        main.args.database,
         f"SELECT * FROM People WHERE `Telegram ID`= {update.effective_user.id}",
         )
     # print(records[0][9])

@@ -1,11 +1,12 @@
 import mysql.connector
-def get_records(host, user, password, database, statement, param = "", port=1881):
+import main
+def get_records(statement, port=1881):
   # Connect to the database
   conn = mysql.connector.connect(
-    host=host,
-    user=user,
-    password=password,
-    database=database,
+    main.args.host,
+    main.args.user,
+    main.args.password,
+    main.args.database,
     port=port
   )
 
@@ -13,10 +14,7 @@ def get_records(host, user, password, database, statement, param = "", port=1881
   cursor = conn.cursor()
 
   # Execute the SELECT statement
-  if param == "":
-    cursor.execute(statement)
-  else:
-    cursor.execute(statement, (param))
+  cursor.execute(statement)
   # Fetch the records
   records = cursor.fetchall()
 
@@ -26,13 +24,13 @@ def get_records(host, user, password, database, statement, param = "", port=1881
   print(records)  
   return records
 
-def insert_records(host, user, password, database, query, port=1881): 
+def insert_records(query, port=1881): 
   try: 
     db_con = mysql.connector.connect(
-      host=host,
-      user=user,
-      password=password,
-      database=database,
+      main.args.host,
+      main.args.user,
+      main.args.password,
+      main.args.database,
       port=port
     ) 
     print(query)
