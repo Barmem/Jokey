@@ -5,16 +5,17 @@ import re
 import time
 
 # Define the states for the conversation
-CAR_INPUT, HUMAN_INPUT = range(2)
+CAR_INPUT, HUMAN_INPUT, START_REGISTRATION = range(3)
 
-def passRequestConvo():
+def startConvo():
     # Define the conversation handler
     conv_handler = ConversationHandler(
-        entry_points=[CommandHandler(['car','human'], isreg)],
+        entry_points=[CommandHandler(['car','human','start'], isreg)],
 
         states={
             CAR_INPUT: [MessageHandler(Filters.text, car_input)],
-            HUMAN_INPUT: [MessageHandler(Filters.text, human_input)]
+            HUMAN_INPUT: [MessageHandler(Filters.text, human_input)],
+            START_REGISTRATION: [MessageHandler(Filters.text, surname_input)]
         },
 
         fallbacks=[CommandHandler('cancel', cancel)]
@@ -40,9 +41,12 @@ def isreg(update, context):
             update.message.reply_text('Введите полный ФИО гостя.')
             return HUMAN_INPUT
             # return ConversationHandler.END
+        elif(command == "start"):
+            update.message.reply_text('Приветствую, я бот для запроса пропуска на территорию, используйте команды в меню слева снизу.')
+            return ConversationHandler.END
     else:
-        update.message.reply_text('Вы не являетесь зарегестрированным пользователем.')
-        return ConversationHandler.END
+        update.message.reply_text("Вы не зарегестрированы. Введите Ваши ФИО, адрес и номер телефона и ждите подтверждения регистрации.")
+        return START_REGISTRATION
 
 def car_input(update, context):
     myregex = re.compile(r"^(([АВЕКМНОРСТУХ]\d{3}(?<!000)[АВЕКМНОРСТУХ]{1,2})(\d{2,3})|(\d{4}(?<!0000)[АВЕКМНОРСТУХ]{2})(\d{2})|(\d{3}(?<!000)(C?D|[ТНМВКЕ])\d{3}(?<!000))(\d{2}(?<!00))|([ТСК][АВЕКМНОРСТУХ]{2}\d{3}(?<!000))(\d{2})|([АВЕКМНОРСТУХ]{2}\d{3}(?<!000)[АВЕКМНОРСТУХ])(\d{2})|([АВЕКМНОРСТУХ]\d{4}(?<!0000))(\d{2})|(\d{3}(?<!000)[АВЕКМНОРСТУХ])(\d{2})|(\d{4}(?<!0000)[АВЕКМНОРСТУХ])(\d{2})|([АВЕКМНОРСТУХ]{2}\d{4}(?<!0000))(\d{2})|([АВЕКМНОРСТУХ]{2}\d{3}(?<!000))(\d{2,3})|(^Т[АВЕКМНОРСТУХ]{2}\d{3}(?<!000)\d{2,3}))")
@@ -95,6 +99,11 @@ def human_input(update, context):
 #         update.message.reply_text('Okay, let\'s try again.',
 #                               reply_markup=ReplyKeyboardRemove())
 #         return SELECT_DESTINATION
+
+def surname_input(update, context):
+    update.message.text
+    sqlaccess.updaterRegister.bot.send_message(chat_id=f"{sqlaccess.args.admin}", text="test")
+    return 
 
 def cancel(update, context):
     """End the conversation."""
