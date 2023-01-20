@@ -416,8 +416,8 @@ FodyWeavers.xsd
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,visualstudio
-.vscode/launch.json
-fuck
+.vscode/
+build/
+build/
+dist/
 main.spec
-build/main/base_library.zip
-build/main/main.exe.manifest
