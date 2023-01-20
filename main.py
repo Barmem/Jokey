@@ -48,13 +48,19 @@ def searchDB(update, context):
             records = sqlaccess.get_records(
                 f"SELECT * FROM Passes WHERE (`Request Time` < FROM_UNIXTIME({current_timestamp}) AND `Expiration Time` > FROM_UNIXTIME({current_timestamp})) AND (`Car Number` LIKE '{update.message.text}' OR `Surname` LIKE '{update.message.text}')"
                 )
-            result = []
-            for record in records:
-                # print(record)
-                if(record[8] == 1):
-                    result.append([record[1]])
-                if(record[8] == 2):
-                    result.append([record[2]])
+            print(records)
+            result = "Список пропусков:\n"
+            if(len(records) != 0):
+                for record in records:
+
+                    if(record[8] == 1):
+                        print(record[8])
+                        result += "Номер авто: " + record[1] + " Время окончания: " + record[6].strftime("%H:%M") + "\n"
+                    if(record[8] == 2):
+                        print(record[8])
+                        result += "Имя: " + record[2] + " Время окончания: " + record[6].strftime("%H:%M") + "\n"
+            else:
+                result = "Пропусков по заданным параметрам нет!"
             update.message.reply_text(f"{result}")
 
 def registerDB(update, context):
@@ -70,6 +76,13 @@ def error(update, context):
 def errorSec(update, context):
     """Log Errors caused by Updates."""
     logger.warning('Telegram SecurityBot error: "%s"',  context.error)
+
+def errorReg(update, context):
+    """Log Errors caused by Updates."""
+    logger.warning('Telegram RegisterBot error: "%s"',  context.error)
+    updaterRegister.bot.send_message(chat_id=f"{sqlaccess.args.admin}", text=f"{context.error}")
+
+
 
 def main():
     
@@ -120,7 +133,7 @@ def main():
     #---------------------------- Register Bot ------------------------
     dp3 = updaterRegister.dispatcher
     dp3.add_handler(MessageHandler(Filters.text, registerDB))
-
+    dp3.add_error_handler(errorReg)
 
     # Get the dispatcher to register handlers
     # dp3 = updaterRegister.dispatcher

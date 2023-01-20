@@ -3,7 +3,6 @@ from telegram.ext import Updater, CommandHandler, ConversationHandler, MessageHa
 import sqlaccess
 import re
 import time
-
 # Define the states for the conversation
 CAR_INPUT, HUMAN_INPUT, START_REGISTRATION = range(3)
 
@@ -101,9 +100,9 @@ def human_input(update, context):
 #         return SELECT_DESTINATION
 
 def surname_input(update, context):
-    update.message.text
-    sqlaccess.updaterRegister.bot.send_message(chat_id=f"{sqlaccess.args.admin}", text="test")
-    return 
+    
+    sqlaccess.updaterRegister.bot.send_message(chat_id=f"{sqlaccess.args.admin}", text=f"Тест:{update.message.text}\n id пользователя:{update.effective_user.id}")
+    return ConversationHandler.END
 
 def cancel(update, context):
     """End the conversation."""
