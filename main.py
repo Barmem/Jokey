@@ -39,19 +39,23 @@ def sql(update, context, host, user, password, database,  param = ""):
     update.message.reply_text(f"{records}")
 
 def searchDB(update, context):
-    current_timestamp = round(time.time())
-    records = sqlaccess.get_records(
-        f"SELECT * FROM Passes WHERE (`Request Time` < FROM_UNIXTIME({current_timestamp}) AND `Expiration Time` > FROM_UNIXTIME({current_timestamp})) AND (`Car Number` LIKE '{update.message.text}' OR `Surname` LIKE '{update.message.text}')"
+    user = sqlaccess.get_records(
+        f"SELECT * FROM People WHERE `Telegram ID`= {update.effective_user.id}",
         )
-    result = []
-    for record in records:
-        print(record)
-        if(record[8] == 1):
-            result.append(record[1])
-        if(record[8] == 2):
-            result.append(record[2])
-    
-    update.message.reply_text(f"{result}")
+    if(len(user) != 0):
+        if(user[0][9] == 1 or user[0][9] == 3):
+            current_timestamp = round(time.time())
+            records = sqlaccess.get_records(
+                f"SELECT * FROM Passes WHERE (`Request Time` < FROM_UNIXTIME({current_timestamp}) AND `Expiration Time` > FROM_UNIXTIME({current_timestamp})) AND (`Car Number` LIKE '{update.message.text}' OR `Surname` LIKE '{update.message.text}')"
+                )
+            result = []
+            for record in records:
+                print(record)
+                if(record[8] == 1):
+                    result.append(record[1])
+                if(record[8] == 2):
+                    result.append(record[2])
+            update.message.reply_text(f"{result}")
 
 def registerDB(update, context):
     list = update.message.text.split('+')
