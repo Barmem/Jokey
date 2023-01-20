@@ -50,11 +50,11 @@ def searchDB(update, context):
                 )
             result = []
             for record in records:
-                print(record)
+                # print(record)
                 if(record[8] == 1):
-                    result.append(record[1])
+                    result.append([record[1]])
                 if(record[8] == 2):
-                    result.append(record[2])
+                    result.append([record[2]])
             update.message.reply_text(f"{result}")
 
 def registerDB(update, context):

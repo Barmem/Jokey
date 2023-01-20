@@ -2,7 +2,7 @@ import mysql.connector
 from main import args 
 def get_records(statement, port=1881):
   # Connect to the database
-  print(f"{args.host}, {args.user}, {args.password}, {args.database}")
+  # print(f"{args.host}, {args.user}, {args.password}, {args.database}")
   conn = mysql.connector.connect(
     host=args.host,
     user=args.user,
@@ -22,7 +22,7 @@ def get_records(statement, port=1881):
   # Close the cursor and connection
   cursor.close()
   conn.close()
-  print(records)  
+  # print(records)  
   return records
 
 def insert_records(query, port=1881): 
@@ -34,7 +34,7 @@ def insert_records(query, port=1881):
       database=args.database,
       port=port
     ) 
-    print(query)
+    # print(query)
     cursor  = db_con.cursor()
     cursor.execute(query) 
     db_con.commit() 
