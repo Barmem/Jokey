@@ -1,6 +1,6 @@
 import mysql.connector
 from main import args, updaterRegister 
-def get_records(statement, port=1881):
+def get_records(statement, port=args.port):
   # Connect to the database
   # print(f"{args.host}, {args.user}, {args.password}, {args.database}")
   conn = mysql.connector.connect(
@@ -25,7 +25,7 @@ def get_records(statement, port=1881):
   # print(records)  
   return records
 
-def insert_records(query, port=1881): 
+def insert_records(query, port=args.port): 
   try: 
     db_con = mysql.connector.connect(
       host=args.host,
