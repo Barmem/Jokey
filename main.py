@@ -1,4 +1,4 @@
-# coding=utf-8
+
 import argparse
 import logging
 import sqlaccess 
@@ -36,13 +36,13 @@ def help(update, context):
 
 def sql(update, context, host, user, password, database,  param = ""):
     records = sqlaccess.get_records(
-        f"SELECT * FROM People WHERE `Telegram ID`= '{update.effective_user.id}';"
+        f"SELECT * FROM People WHERE `Telegram ID`= {update.effective_user.id}"
         )
     update.message.reply_text(f"{records}")
 
 def searchDB(update, context):
     user = sqlaccess.get_records(
-        f"SELECT * FROM People WHERE `Telegram ID`= '{update.effective_user.id}';",
+        f"SELECT * FROM People WHERE `Telegram ID`= {update.effective_user.id}",
         )
     if(len(user) != 0):
         if(user[0][9] == 1 or user[0][9] == 3):
