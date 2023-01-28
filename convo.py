@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from telegram import ReplyKeyboardMarkup, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import Updater, CommandHandler, ConversationHandler, MessageHandler, Filters
 import sqlaccess

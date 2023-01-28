@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import mysql.connector
 from main import args, updaterRegister 
 def get_records(statement, port=args.port):
