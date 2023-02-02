@@ -3,7 +3,7 @@ import argparse
 import logging
 import sqlaccess 
 import convo
-from telegram import ReplyKeyboardMarkup, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardRemove
+from telegram import ReplyKeyboardMarkup, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardRemove, ParseMode
 from telegram.ext import Updater, CommandHandler, ConversationHandler, MessageHandler, Filters
 import time
 
@@ -57,13 +57,13 @@ def searchDB(update, context):
 
                     if(record[8] == 1):
                         print(record[8])
-                        result += "Номер авто: " + record[1] + " Время окончания: " + record[6].strftime("%H:%M") + "\n"
+                        result += "Номер авто: *" + record[1] + "*. Время окончания: " + record[6].strftime("%H:%M %d.%m.%y") + "\n"
                     if(record[8] == 2):
                         print(record[8])
-                        result += "Имя: " + record[2] + " Время окончания: " + record[6].strftime("%d.%m.%y %H:%M") + "\n"
+                        result += "Имя: *" + record[2] + "*. Время окончания: " + record[6].strftime("%H:%M %d.%m.%y") + "\n"
             else:
                 result = "Пропусков по заданным параметрам нет!"
-            update.message.reply_text(f"{result}")
+            update.message.reply_text(f"{result}", parse_mode=ParseMode.MARKDOWN)
 
 def registerDB(update, context):
     list = update.message.text.split('+')
