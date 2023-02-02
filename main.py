@@ -60,7 +60,7 @@ def searchDB(update, context):
                         result += "Номер авто: " + record[1] + " Время окончания: " + record[6].strftime("%H:%M") + "\n"
                     if(record[8] == 2):
                         print(record[8])
-                        result += "Имя: " + record[2] + " Время окончания: " + record[6].strftime("%H:%M") + "\n"
+                        result += "Имя: " + record[2] + " Время окончания: " + record[6].strftime("%d.%m.%y %H:%M") + "\n"
             else:
                 result = "Пропусков по заданным параметрам нет!"
             update.message.reply_text(f"{result}")
