@@ -48,7 +48,7 @@ def isreg(update, context):
         return START_REGISTRATION
 
 def car_input(update, context):
-    myregex = re.compile(r"^[А-Яа-яЁё\d]*\d{3}[А-Яа-яЁё\d]*")
+    myregex = re.compile(r"^[А-Яа-яЁё\d\h]*\d{3}[А-Яа-яЁё\d\h]*")
     # А123ВЕ77
     if myregex.match(update.message.text):
         current_timestamp = round(time.time())
