@@ -1,5 +1,4 @@
-from telegram import ReplyKeyboardMarkup, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardRemove
-from telegram.ext import Updater, CommandHandler, ConversationHandler, MessageHandler, Filters
+from telegram.ext import CommandHandler, ConversationHandler, MessageHandler, Filters
 import sqlaccess
 import re
 import time
@@ -84,7 +83,7 @@ def human_input(update, context):
             )
         update.message.reply_text(f"Пропуск на {result_string} оформлен")
     else:
-        update.message.reply_text(f"Неверный формат ФИО.")
+        update.message.reply_text("Неверный формат ФИО.")
     return ConversationHandler.END
 
 # def confirm_destination(update, context):

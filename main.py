@@ -3,8 +3,8 @@ import argparse
 import logging
 import sqlaccess 
 import convo
-from telegram import ReplyKeyboardMarkup, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardRemove, ParseMode
-from telegram.ext import Updater, CommandHandler, ConversationHandler, MessageHandler, Filters
+from telegram import ParseMode
+from telegram.ext import Updater, MessageHandler, Filters
 import time
 
 # Enable logging

@@ -1,5 +1,5 @@
 import mysql.connector
-from main import args, updaterRegister 
+from main import args 
 def get_records(statement, port=args.port):
   # Connect to the database
   # print(f"{args.host}, {args.user}, {args.password}, {args.database}")
