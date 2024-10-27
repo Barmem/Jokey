@@ -1,2 +1,2 @@
-mysql_connector_python==8.0.31
+mysql_connector_python==9.1.0
 python_telegram_bot==13.15
